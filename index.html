@@ -64,7 +64,7 @@
 <ol>
 <li>index.php - Home page which shows the graphs and info.</li>
 <li>style.css - Styles for the fashion!</li>
-<li>rpiTemp.db - SQLite db file. Empty but with tables.</li>
+<li>rpiTemp.db - SQLite db file. With some test data.</li>
 <li>measuretemp.php - php script for cron job.</li>
 </ol><p>To set it up:</p>
 
@@ -76,7 +76,8 @@
 <li>Setup a cron job as root
 <code>$ sudo crontab -e</code>
 and add a line at the end of the file:</li>
-</ol><p><code>*/5 * * * * php /var/www/measuretemp.php</code> - /var/www/ is the place where you've unziped the package!</p>
+<p><code>*/5 * * * * php /var/www/measuretemp.php</code> - /var/www/ is the place where you've unziped the package!</p>
+</ol>
 
 <p>This will run measuretemp.php every 5 minutes. If you want it to happen less often, change 5 to a higher number of minutes (*/10  for every 10 minutes, */35 for every 35 minutes and so on).</p>
 
