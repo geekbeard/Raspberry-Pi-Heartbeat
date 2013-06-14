@@ -1,9 +1,9 @@
 Raspberry-Pi-Heartbeat
 ======================
 
-#Status webpage for Raspberry Pi#
+##Status webpage for Raspberry Pi##
 
-Prerequisites
+###Prerequisites###
 You will have to check a few things for this page to show up correctly. You need to have:
 
 Webserver (apache \ lighttpd \ ..) with PHP
