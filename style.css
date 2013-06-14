@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+#temp {
+	height:250px;
+	width=100%;
+}
+
+#chart_nowmeter {
+	position:relative;
+	float:left;
+	margin-left:100px;
+	width:250px;
+	height: 250px;
+}
+
+#chart_cpunowmeter {
+	position:relative;
+	float:left;
+	width:250px;
+	height: 250px;
+}
+
+#traffic_div{
+	position:relative;
+	width:500px;
+	height: 140px;
+}
+
+#traffic{
+	position: relative;
+	float:left;
+}
+
+#chart_temphistory{
+
+
+}
+
+#chart_cpuhistory{
+
+
+}
