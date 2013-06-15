@@ -1,33 +1,54 @@
 #!/bin/bash
 
+#Try to install lsb_release to get distro information
+#TODO add support for rasbian uname?
+DISTRO=$(lsb_release -sd)
+
+echo distro:$DISTRO
+
+PWD=$(pwd)
+#echo pwd:$PWD
+
+#Add measure temp to crontab
+function update_crontab() {
+	sampling_interval="5"
+	tmp_cronf="tmp_cronf"
+	crontab -l > $tmp_cronf
+	echo "*/$sampling_interval * * * * php $PWD/measuretemp.php" >> $tmp_cronf
+	crontab $tmp_cronf
+	echo "Crontab updated: Sampling temperature every $sampling_interval minutes." 
+}
+
 #Install dependencies in Ubuntu if required
-function install_ubuntu() {
+function install_raspbian() {
 	#TODO
 	0
 }
 
 #Install dependencies in Arch Linux if required
 install_arch() {
-	echo "Installing dependencies for Arch Linux..."
+	packages=" vnstat lsb-release php-sqlite"
+	echo "Installing dependencies ($packages) for Arch Linux..."
 	pacman -Syy
-	pacman -S vnstat lsb-release php-sqlite
-
+	pacman -S $packages	
 }
 
 
 
-DISTRO=$(lsb_release -sd)
-echo $DISTRO
 
 #TODO ADD OTHER DISTROS
 if [ "$DISTRO"=="Arch Linux" ];
 then
 	install_arch
-elif [ "$DISTRO"=="Ubuntu" ];
+	update_crontab
+	php cleanDB.php
+elif [ "$DISTRO"=="Raspbian" ];
 then
 	install_ubuntu
+	update_crontab
+	php cleanDB.php
 else
-	echo "Your distribuition $DISTRO is not supported by this installer (yet)."
+	echo "Your distribuition '$DISTRO' is not supported by this installer (yet)."
 	exit 1
 fi
 
