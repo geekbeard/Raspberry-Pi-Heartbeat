@@ -1,3 +1,5 @@
+<?php include "config.php" ?>
+
 <?php 
 //traffic
 	$traffic=null;
@@ -96,7 +98,7 @@
           ['id', 'temperature'],
 		  
 			<?php 
-				$db = new SQLite3("/var/www/temp/rpiTemp.db");
+				$db = new SQLite3($config["temperature_DB"]);
 				$results = $db->query('SELECT * FROM rpi_temp ORDER BY id DESC LIMIT 0,288');
 				while ($row = $results->fetchArray()) {
 					$id = $row['id'];

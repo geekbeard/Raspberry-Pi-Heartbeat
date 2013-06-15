@@ -1,6 +1,8 @@
+<?php include "config.php" ?>
+
 <?php 
 
-	$db = new SQLite3("/var/www/temp/rpiTemp.db");
+	$db = new SQLite3($config["temperature_DB"]);
 	
 	$temp=round(exec("cat /sys/class/thermal/thermal_zone0/temp ") / 1000, 1);
 	$dtime=date("Y-m-d H:i:s", strtotime ("+0 hour"));

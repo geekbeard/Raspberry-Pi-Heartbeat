@@ -1,3 +1,5 @@
+<?php include "config.php" ?>
+
 <?php
 
 $filename = 'cl.php';
@@ -6,7 +8,7 @@ $s = 'DO NOT REMOVE THIS FILE! Unless you want to clean your DB!';
 if (file_exists($filename)){
 	echo "Db is already cleaned!";
 } else {
-	$db = new SQLite3("/var/www/temp/rpiTemp.db");
+	$db = new SQLite3($config["temperature_DB"]);
 	//DROP TABLE
 	$db->query('DROP TABLE rpi_temp');
 	echo "DB Droped! <br>";
