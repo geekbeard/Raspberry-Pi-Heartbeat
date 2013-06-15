@@ -52,7 +52,7 @@ really want to clean the database.
 
 **You are done!**
 
-You've unzipped the package, created a scheduled task for Raspbian to run the php script every N minutes and you have cleaned the database from test data and the script created a fail safe flag (file: cl.php) which will prevent anyone from cleaning db again!
+You've unzipped the package, created a scheduled task for Raspbian to run the php script every N minutes and you have cleaned the database from test data and the script created a fail safe flag (file: db.lck) which will prevent anyone from cleaning db again!
 
 Access the webpage with the web browser and start collecting statistics!:)
 
