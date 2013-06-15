@@ -2,6 +2,7 @@
 
 #Try to install lsb_release to get distro information
 #TODO add support for rasbian uname?
+#y: raspbian doesnt have lsb_release and can't be installed - any other way to get the right distro?
 DISTRO=$(lsb_release -sd)
 
 echo distro:$DISTRO

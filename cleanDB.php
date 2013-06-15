@@ -4,7 +4,7 @@
 
 	$verbose=$config["verbose"];
 
-	$filename = 'db.lck';
+	$filename = "db.lck";
 	$s = 'DO NOT REMOVE THIS FILE! Unless you want to clean your DB!';
 
 	if (file_exists($filename)){
@@ -15,11 +15,12 @@
 	else {
 		$db = new SQLite3($config["temperature_DB"]);
 		//DROP TABLE
-		$db->query('DROP TABLE rpi_temp');
+		//y: for some reason - this stoped working on my rpi...doesn't drop the table... will check what's that.
+		$db->exec("DROP TABLE IF EXISTS rpi_temp");
 	
 		if($verbose)
 			echo "DB Droped! <br>";
-		$db->query("CREATE TABLE 'rpi_temp' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'temp' REAL, 'time' TEXT, 'cpu' REAL)");
+		$db->exec("CREATE TABLE 'rpi_temp' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'temp' REAL, 'time' TEXT, 'cpu' REAL)");
 	
 		if($verbose)
 			echo "DB created! <br>";

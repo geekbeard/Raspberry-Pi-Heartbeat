@@ -1,7 +1,10 @@
 <?php include "config.php" ?>
 
 <?php 
-//traffic
+	//DB init
+	$db = new SQLite3($config["temperature_DB"]);
+
+	//traffic
 	$traffic=null;
 	exec("vnstat --dumpdb", $traffic);
 	$alltrxL=explode(";",$traffic[6]);
@@ -98,7 +101,7 @@
           ['id', 'temperature'],
 		  
 			<?php 
-				$db = new SQLite3($config["temperature_DB"]);
+				
 				$results = $db->query('SELECT * FROM rpi_temp ORDER BY id DESC LIMIT 0,288');
 				while ($row = $results->fetchArray()) {
 					$id = $row['id'];
