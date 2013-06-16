@@ -3,15 +3,16 @@
 #Try to install lsb_release to get distro information
 #TODO add support for rasbian uname? 
 #y: raspbian doesnt have lsb_release and can't be installed - any other way to get the right distro?
-DISTRO=$(lsb_release -sd)
+#DISTRO=$(lsb_release -sd)
+DISTRO=$(uname -n)
 
 echo distro:$DISTRO
 
 PWD=$(pwd)
-#echo pwd:$PWD
+echo pwd:$PWD
 
 #Add measure temp to crontab
-function update_crontab() {
+update_crontab() {
 	sampling_interval="5"
 	tmp_cronf="tmp_cronf"
 	crontab -l > $tmp_cronf
@@ -21,9 +22,32 @@ function update_crontab() {
 }
 
 #Install dependencies in Ubuntu if required
-function install_raspbian() {
+install_ubuntu() {
 	#TODO
-	0
+	sqliteinst=$(dpkg -l | grep php5-sqlite)
+	vnstatinst=$(dpkg -l | grep vnstat)
+	vnstatshort=${vnstatinst:0:2}
+	sqlshort=${sqliteinst:0:2}
+	if [ "$sqlshort" = "ii" ]; then
+		echo "Sqlite is installed."
+		exit 1
+	else
+		echo "Need to install Sqlite."
+		echo "Installing Sqlite for PHP"
+		sudo apt-get update
+		sudo apt-get -y install php5-sqlite
+		exit 1
+	fi
+	if [ "$vnstatshort" = "ii" ]; then
+		echo "vnstat is installed."
+		exit 1
+	else
+		echo "Need to install vnstat."
+		echo "Installing vnstat for PHP"
+		sudo apt-get update
+		sudo apt-get -y install vnstat
+		exit 1
+	fi
 }
 
 #Install dependencies in Arch Linux if required
@@ -34,20 +58,17 @@ install_arch() {
 	pacman -S $packages	
 }
 
-
-
-
 #TODO ADD OTHER DISTROS
-if [ "$DISTRO"=="Arch Linux" ];
-then
+if [ "$DISTRO" = "Arch Linux" ]; then
 	install_arch
 	update_crontab
 	php cleanDB.php
-elif [ "$DISTRO"=="Raspbian" ];
-then
+	exit 1
+elif [ "$DISTRO" = "raspberrypi" ]; then
 	install_ubuntu
 	update_crontab
 	php cleanDB.php
+	exit 1
 else
 	echo "Your distribuition '$DISTRO' is not supported by this installer (yet)."
 	exit 1
