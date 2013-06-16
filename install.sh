@@ -30,7 +30,7 @@ install_ubuntu() {
 	sqlshort=${sqliteinst:0:2}
 	if [ "$sqlshort" = "ii" ]; then
 		echo "Sqlite is installed."
-		exit 1
+		
 	else
 		echo "Need to install Sqlite."
 		echo "Installing Sqlite for PHP"
@@ -40,7 +40,7 @@ install_ubuntu() {
 	fi
 	if [ "$vnstatshort" = "ii" ]; then
 		echo "vnstat is installed."
-		exit 1
+		
 	else
 		echo "Need to install vnstat."
 		echo "Installing vnstat for PHP"
