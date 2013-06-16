@@ -3,6 +3,7 @@
 <?php 
 	//DB init
 	$db = new SQLite3($config["temperature_DB"]);
+	
 
 	//traffic
 	$traffic=null;
@@ -99,10 +100,9 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['id', 'temperature'],
-		  
 			<?php 
 				
-				$results = $db->query('SELECT * FROM rpi_temp ORDER BY id DESC LIMIT 0,288');
+				$results = $db->query("SELECT * FROM rpi_temp ORDER BY id DESC LIMIT 0,288");
 				while ($row = $results->fetchArray()) {
 					$id = $row['id'];
 					$temp=$row['temp'];
