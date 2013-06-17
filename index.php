@@ -23,6 +23,10 @@
 	$day1rx = $day1[3];
 	$day1tx = $day1[4];
 	
+	$day2 = explode(";",$traffic[15]);
+	$day2rx = $day2[3];
+	$day2tx = $day2[4];
+	
 	$mon0 = explode(";",$traffic[43]);
 	$mon0rx = $mon0[3];
 	$mon0tx = $mon0[4];
@@ -68,32 +72,7 @@
   	<title>Raspberry Pi - Status</title>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     
-    <script type='text/javascript'>
-      google.load('visualization', '1', {packages:['table']});
-      google.setOnLoadCallback(drawTable);
-      function drawTable() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'When');
-        data.addColumn('number', 'DL');
-        data.addColumn('number', 'UL');
-        data.addRows([
-          ['Today', <?php echo "{v:$day0rx,f:'$day0rx MB'} , {v:$day0tx,f:'$day0tx MB'}"; ?>],
-          ['Yesterday',<?php echo "{v:$day1rx,f:'$day1rx MB'} , {v:$day1tx,f:'$day1tx MB'}"; ?>],
-          ['This Month',<?php echo "{v:$mon0rx,f:'$mon0rx MB'} , {v:$mon0tx,f:'$mon0tx MB'}"; ?>],
-          ['Prev. Month', <?php echo "{v:$mon1rx,f:'$mon1rx MB'} , {v:$mon1tx,f:'$mon1tx MB'}"; ?>],
-          ['Total', <?php echo "{v:$alltrx,f:'$alltrx MB'} , {v:$allttx,f:'$allttx MB'}"; ?>]
-
-        ]);
-        
-        var options = {
-        	sort:'disable',showRowNumber: false,width:500
-        
-        };
-
-        var table = new google.visualization.Table(document.getElementById('traffic_div'));
-        table.draw(data, options);
-      }
-    </script>
+    
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
@@ -117,7 +96,7 @@
         ]);
 
         var options = {
-          title: 'Raspberry PI Temperature'
+          title: 'Raspberry PI Temperature',legend:{position: 'in', alignment:'center'}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_temphistory'));
@@ -148,7 +127,7 @@
         ]);
 
         var options = {
-          title: 'Raspberry PI CPU Load'
+          title: 'Raspberry PI CPU Load',legend:{position: 'in', alignment:'center'}
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('chart_cpuhistory'));
@@ -170,7 +149,7 @@
           redFrom: 75, redTo: 90,
           yellowFrom:60, yellowTo: 75,
           greenFrom:0,greenTo:60,
-          minorTicks: 5, min:0,max:90
+          minorTicks: 5, min:0,max:90,
         };
 
         var chart = new google.visualization.Gauge(document.getElementById('chart_nowmeter'));
@@ -199,14 +178,61 @@
         chart.draw(data, options);
       }
     </script>
-    
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'When');
+        data.addColumn('number', 'DL');
+        data.addColumn('number', 'UL');
+        data.addRows([
+          
+          ['This Month',<?php echo "{v:$mon0rx,f:'$mon0rx MB'} , {v:$mon0tx,f:'$mon0tx MB'}"; ?>],
+          ['Prev. Month', <?php echo "{v:$mon1rx,f:'$mon1rx MB'} , {v:$mon1tx,f:'$mon1tx MB'}"; ?>],
+          ['Total', <?php echo "{v:$alltrx,f:'$alltrx MB'} , {v:$allttx,f:'$allttx MB'}"; ?>]
+
+        ]);
+        
+        var options = {
+        	sort:'disable',showRowNumber: false,width:440
+        
+        };
+
+        var table = new google.visualization.Table(document.getElementById('traffic_div'));
+        table.draw(data, options);
+      }
+    </script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Day', 'Download (mb)', 'Upload (mb)'],
+          ['Today',  <?php echo "$day0rx,$day0tx";?>],
+          ['-1 day',   <?php echo "$day1rx,$day1tx";?>],
+          ['-2 days',  <?php echo "$day2rx,$day2tx";?>]
+        ]);
+
+        var options = {
+          title: 'Daily Traffic',height:158,width:500,legend:{position: 'in', alignment:'center'}
+          
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById('traffic_graph'));
+        chart.draw(data, options);
+      }
+    </script>
   </head>
   <body>
   	<div id="temp">
   		<div id="chart_nowmeter"></div>
   		<div id="chart_cpunowmeter"></div>
   		<div id="traffic">
+  			<div id="traffic_graph"></div>
+  			<div style="clear:both"></div>
   			<div id="traffic_div"></div>
+  			
   		</div>
   	</div>
     <div id="chart_temphistory"></div>

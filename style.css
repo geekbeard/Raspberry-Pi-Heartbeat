@@ -25,10 +25,11 @@
 #traffic_div{
 	position:relative;
 	width:500px;
-	height: 140px;
+	height: 92px;
 }
 
 #traffic{
+	height:250px;
 	position: relative;
 	float:left;
 }
