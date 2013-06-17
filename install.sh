@@ -34,8 +34,8 @@ install_ubuntu() {
 	else
 		echo "Need to install Sqlite."
 		echo "Installing Sqlite for PHP"
-		sudo apt-get update
-		sudo apt-get -y install php5-sqlite
+		apt-get update
+		apt-get -y install php5-sqlite
 		exit 1
 	fi
 	if [ "$vnstatshort" = "ii" ]; then
@@ -44,8 +44,8 @@ install_ubuntu() {
 	else
 		echo "Need to install vnstat."
 		echo "Installing vnstat for PHP"
-		sudo apt-get update
-		sudo apt-get -y install vnstat
+		apt-get update
+		apt-get -y install vnstat
 		exit 1
 	fi
 }
