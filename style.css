@@ -1,6 +1,14 @@
 @charset "utf-8";
 /* CSS Document */
 
+#gencontainer {
+	width: 900px;
+    	margin: 0 auto;	
+	}
+
+#topmenu {
+	
+	}
 
 #temp {
 	height:250px;
