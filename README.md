@@ -3,10 +3,12 @@ Raspberry-Pi-Heartbeat
 
 ##Status webpage for Raspberry Pi##
 
+![Raspberry Pi Heartbeat](http://i.imgur.com/nEqeHF6.png "Latest version screenshot:")
+
 ###Prerequisites###
 You will have to check a few things for this page to show up correctly. You need to have:
 
-* lsb-release - so the automated installer script can find your distribution name.
+* lsb-release (for non Raspbian distributions) - so the automated installer script can find your distribution name.
 * Webserver (apache \ lighttpd \ ..) with PHP
 
 
