@@ -1,68 +1,8 @@
-<?php include "config.php" ?>
-
 <?php 
-	//DB init
-	$db = new SQLite3($config["temperature_DB"]);
-	
+  require_once "config.php" ;
+  require_once "funs.php" ;
 
-	//traffic
-	$traffic=null;
-	exec("vnstat --dumpdb", $traffic);
-	$alltrxL=explode(";",$traffic[6]);
-	$allttxL=explode(";",$traffic[7]);	
-	
-	$alltrx = $alltrxL[1];
-	$allttx = $allttxL[1];
-	//$alltrxtx = $alltrx+$allttx;
-	
-	$day0 = explode(";",$traffic[13]);
-	$day0rx = $day0[3];
-	$day0tx = $day0[4];
-	
-	$day1 = explode(";",$traffic[14]);
-	$day1rx = $day1[3];
-	$day1tx = $day1[4];
-	
-	$day2 = explode(";",$traffic[15]);
-	$day2rx = $day2[3];
-	$day2tx = $day2[4];
-	
-	$mon0 = explode(";",$traffic[43]);
-	$mon0rx = $mon0[3];
-	$mon0tx = $mon0[4];
-	
-	$mon1 = explode(";",$traffic[44]);
-	$mon1rx = $mon1[3];
-	$mon1tx = $mon1[4];
-	
-
-//CPU Usage
-	$output1 = null;
-	$output2 = null;
-	//First sample
-	exec("cat /proc/stat", $output1);
-	//Sleep before second sample
-	sleep(1);
-	//Second sample
-	exec("cat /proc/stat", $output2);
-	$cpuload = 0;
-	for ($i=0; $i < 1; $i++)
-	{
-		//First row
-		$cpu_stat_1 = explode(" ", $output1[$i+1]);
-		$cpu_stat_2 = explode(" ", $output2[$i+1]);
-		//Init arrays
-		$info1 = array("user"=>$cpu_stat_1[1], "nice"=>$cpu_stat_1[2], "system"=>$cpu_stat_1[3], "idle"=>$cpu_stat_1[4]);
-		$info2 = array("user"=>$cpu_stat_2[1], "nice"=>$cpu_stat_2[2], "system"=>$cpu_stat_2[3], "idle"=>$cpu_stat_2[4]);
-		$idlesum = $info2["idle"] - $info1["idle"] + $info2["system"] - $info1["system"];
-		$sum1 = array_sum($info1);
-		$sum2 = array_sum($info2);
-		//Calculate the cpu usage as a percent
-		$load = (1 - ($idlesum / ($sum2 - $sum1))) * 100;
-		$cpuload += $load;
-	}
-	$cpuload = round($cpuload, 1); //One decimal place
-
+  $network = Stats::network() ;
 ?>
 
 <html>
@@ -78,21 +18,7 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['id', 'temperature'],
-			<?php 
-				
-				$results = $db->query("SELECT * FROM rpi_temp ORDER BY id DESC LIMIT 0,288");
-				while ($row = $results->fetchArray()) {
-					$id = $row['id'];
-					$temp=$row['temp'];
-					$dtime=substr($row['time'], -8, 5);
-					$cpu=$row['cpu'];
-					
-					echo "['$dtime',$temp],";  
-					
-				}
-			?>
-  
+          ['id', 'temperature'], <?php echo Stats::temperatures() ; ?>  
         ]);
 
         var options = {
@@ -108,22 +34,7 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['id', 'CPU Load %'],
-		  
-			<?php 
-				
-				$results = $db->query('SELECT * FROM rpi_temp ORDER BY id DESC LIMIT 0,288');
-				while ($row = $results->fetchArray()) {
-					$id = $row['id'];
-					$cpu=$row['cpu'];
-					$dtime=substr($row['time'], -8, 5);
-					$cpu=$row['cpu'];
-					
-					echo "['$dtime',$cpu],";  
-					
-				}
-			?>
-  
+          ['id', 'CPU Load %'], <?php echo Stats::cpuLoads() ; ?>  
         ]);
 
         var options = {
@@ -140,7 +51,7 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['T', <?php echo round(exec("cat /sys/class/thermal/thermal_zone0/temp ") / 1000, 1);?>],
+          ['T', <?php echo Stats::temperature() ;?>],
           
         ]);
 
@@ -162,7 +73,7 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Label', 'Value'],
-          ['CPU', <?php echo $cpuload;?>],
+          ['CPU', <?php echo Stats::cpuLoad();?>],
           
         ]);
 
@@ -188,15 +99,14 @@
         data.addColumn('number', 'UL');
         data.addRows([
           
-          ['This Month',<?php echo "{v:$mon0rx,f:'$mon0rx MB'} , {v:$mon0tx,f:'$mon0tx MB'}"; ?>],
-          ['Prev. Month', <?php echo "{v:$mon1rx,f:'$mon1rx MB'} , {v:$mon1tx,f:'$mon1tx MB'}"; ?>],
-          ['Total', <?php echo "{v:$alltrx,f:'$alltrx MB'} , {v:$allttx,f:'$allttx MB'}"; ?>]
+          ['This Month',<?php echo "{v:{$network['mon0rx']},f:'{$network['mon0rx']} MB'} , {v:{$network['mon0tx']},f:'{$network['mon0tx']} MB'}"; ?>],
+          ['Prev. Month', <?php echo "{v:{$network['mon1rx']},f:'{$network['mon1rx']} MB'} , {v:{$network['mon1tx']},f:'{$network['mon1tx']} MB'}"; ?>],
+          ['Total', <?php echo "{v:{$network['alltrx']},f:'{$network['alltrx']} MB'} , {v:{$network['allttx']},f:'{$network['allttx']} MB'}"; ?>]
 
         ]);
         
         var options = {
         	sort:'disable',showRowNumber: false,width:440
-        
         };
 
         var table = new google.visualization.Table(document.getElementById('traffic_div'));
@@ -209,9 +119,9 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Day', 'Download (mb)', 'Upload (mb)'],
-          ['Today',  <?php echo "$day0rx,$day0tx";?>],
-          ['-1 day',   <?php echo "$day1rx,$day1tx";?>],
-          ['-2 days',  <?php echo "$day2rx,$day2tx";?>]
+          ['Today',  <?php echo "{$network['day0rx']},{$network['day0tx']}";?>],
+          ['-1 day',   <?php echo "{$network['day1rx']},{$network['day1tx']}";?>],
+          ['-2 days',  <?php echo "{$network['day2rx']},{$network['day2tx']}";?>]
         ]);
 
         var options = {

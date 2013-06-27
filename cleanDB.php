@@ -1,4 +1,5 @@
-<?php include "config.php" ?>
+<?php require_once "config.php" ?>
+<?php require_once "db.php" ?>
 
 <?php
 
@@ -13,20 +14,18 @@
 		}
 	} 
 	else {
-		$db = new SQLite3($config["temperature_DB"]);
 		//DROP TABLE
 		//y: for some reason - this stoped working on my rpi...doesn't drop the table... will check what's that.
-		$db->exec("DROP TABLE IF EXISTS rpi_temp");
+		DB::exec("DROP TABLE IF EXISTS rpi_temp");
 	
 		if($verbose)
 			echo "DB Droped! <br>";
-		$db->exec("CREATE TABLE 'rpi_temp' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'temp' REAL, 'time' TEXT, 'cpu' REAL)");
+		DB::exec("CREATE TABLE 'rpi_temp' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'temp' REAL, 'time' TEXT, 'cpu' REAL)");
 	
 		if($verbose)
 			echo "DB created! <br>";
-		$db = NULL;
 		
-		require 'measuretemp.php';
+		Stat::measureTemp();
 	
 		if($verbose)
 			echo "First values inserted! Good luck:) <br>";
