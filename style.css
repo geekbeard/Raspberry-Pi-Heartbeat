@@ -1,5 +1,19 @@
 @charset "utf-8";
 /* CSS Document */
+/*
+	<div id="temp">
+  		<div id="chart_nowmeter"></div>
+  		<div id="chart_cpunowmeter"></div>
+  		<div id="traffic">
+  			<div id="traffic_graph"></div>
+  			<div style="clear:both"></div>
+  			<div id="traffic_div"></div>
+  			
+  		</div>
+  	</div>
+    <div id="chart_temphistory"></div>
+    <div id="chart_cpuhistory"></div>
+*/   
 
 #gencontainer {
 	width: 900px;
@@ -11,35 +25,36 @@
 	}
 
 #temp {
-	height:250px;
 	width=100%;
+	overflow:hidden;
+	display:inline-block;
 }
 
 #chart_nowmeter {
-	position:relative;
-	float:left;
-	margin-left:100px;
-	width:250px;
-	height: 250px;
+/*	position:relative;*/
+	/*float:left;*/
+	/*margin-left:100px;*/
+	width:256px;
+	display:inline-block;
 }
 
 #chart_cpunowmeter {
-	position:relative;
-	float:left;
-	width:250px;
-	height: 250px;
+/*	position:relative;*/
+	/*float:left;*/
+	width:256px;
+	display:inline-block;
 }
 
 #traffic_div{
-	position:relative;
-	width:500px;
+//	position:relative;
+	width:30%;
 	height: 92px;
 }
 
 #traffic{
 	height:250px;
-	position: relative;
-	float:left;
+//	position: relative;
+//	float:left;
 }
 
 #chart_temphistory{

@@ -8,7 +8,7 @@
 <html>
   <head>
   <meta charset="utf-8">
-  	<link rel="stylesheet" href="style.css" media="screen" />
+	<!-- 	<link rel="stylesheet" href="style.css" media="screen" /> -->
   	<title>Raspberry Pi - Status</title>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     
@@ -56,7 +56,7 @@
         ]);
 
         var options = {
-         height: 300,
+          //height: 300,
           redFrom: 75, redTo: 90,
           yellowFrom:60, yellowTo: 75,
           greenFrom:0,greenTo:60,
@@ -78,7 +78,7 @@
         ]);
 
         var options = {
-         height: 300,
+          //height: 300,
           redFrom: 70, redTo: 100,
           yellowFrom:50, yellowTo: 70,
           greenFrom:0,greenTo:20,
@@ -135,12 +135,15 @@
     </script>
   </head>
   <body>
+	<style>
+	<?php include "style.css" ?>
+	</style>
   	<div id="temp">
   		<div id="chart_nowmeter"></div>
   		<div id="chart_cpunowmeter"></div>
   		<div id="traffic">
   			<div id="traffic_graph"></div>
-  			<div style="clear:both"></div>
+  			<!--div style="clear:both"></div-->
   			<div id="traffic_div"></div>
   			
   		</div>
