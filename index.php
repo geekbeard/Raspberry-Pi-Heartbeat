@@ -73,9 +73,6 @@
               if(this.readyState!=4 || this.status != 200)
                 return; //not ready / bad answer
 
-              //console.log("onready status temp :"+xhReq.readyState);
-              //console.log("got temp:"+xhReq.responseText+":");
-
               var temp = xhReq.responseText.trim();
               var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
@@ -115,11 +112,8 @@
         setInterval(function () {
           var xhReq = new XMLHttpRequest();
           xhReq.onreadystatechange = function() {
-            console.log("LEL");
             if(this.readyState!=4 || this.status != 200)
               return; //not ready / bad answer
-
-            console.log("LEL");
 
             var cpu = this.responseText.trim();
             var data = google.visualization.arrayToDataTable([
