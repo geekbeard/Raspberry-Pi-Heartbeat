@@ -48,34 +48,51 @@
     <script type='text/javascript'>
       google.load('visualization', '1', {packages:['gauge']});
       google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['T', <?php echo Stats::temperature() ;?>],
+        function drawChart() {
+          var options = {
+            //height: 300,
+            redFrom: 75, redTo: 90,
+            yellowFrom:60, yellowTo: 75,
+            greenFrom:0,greenTo:60,
+            minorTicks: 5, min:0,max:90,
+          };
+
+          var chart = new google.visualization.Gauge(document.getElementById('chart_nowmeter'));
           
-        ]);
+          var data = google.visualization.arrayToDataTable([
+            ['Label', 'Value'],
+            ['T', <?php echo Stats::temperature();?> ], //initial value from PHP
+          ]);
 
-        var options = {
-          //height: 300,
-          redFrom: 75, redTo: 90,
-          yellowFrom:60, yellowTo: 75,
-          greenFrom:0,greenTo:60,
-          minorTicks: 5, min:0,max:90,
-        };
+          chart.draw(data, options);
 
-        var chart = new google.visualization.Gauge(document.getElementById('chart_nowmeter'));
-        chart.draw(data, options);
-      }
+          //Regular updates of the gauge
+          setInterval(function () {
+            var xhReq = new XMLHttpRequest();
+            xhReq.onreadystatechange = function() {
+              if(this.readyState!=4 || this.status != 200)
+                return; //not ready / bad answer
+
+              //console.log("onready status temp :"+xhReq.readyState);
+              //console.log("got temp:"+xhReq.responseText+":");
+
+              var temp = xhReq.responseText.trim();
+              var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['T', parseFloat(temp) ], //new value attained by AJAX
+              ]);
+            
+              chart.draw(data, options);
+            }
+            xhReq.open("GET", <?php echo Stats::temperatureURL();?>, true);
+            xhReq.send(null);
+          },1000);
+        }
     </script>
     <script type='text/javascript'>
       google.load('visualization', '1', {packages:['gauge']});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Label', 'Value'],
-          ['CPU', <?php echo Stats::cpuLoad();?>],
-          
-        ]);
 
         var options = {
           //height: 300,
@@ -86,7 +103,35 @@
         };
 
         var chart = new google.visualization.Gauge(document.getElementById('chart_cpunowmeter'));
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['CPU', <?php echo Stats::cpuLoad();?>], //initial value from PHP  
+        ]);
+
         chart.draw(data, options);
+
+        //Regular updates of the gauge        
+        setInterval(function () {
+          var xhReq = new XMLHttpRequest();
+          xhReq.onreadystatechange = function() {
+            console.log("LEL");
+            if(this.readyState!=4 || this.status != 200)
+              return; //not ready / bad answer
+
+            console.log("LEL");
+
+            var cpu = this.responseText.trim();
+            var data = google.visualization.arrayToDataTable([
+              ['Label', 'Value'],
+              ['CPU', parseFloat(cpu) ], //new value attained by AJAX
+            ]);
+              
+            chart.draw(data, options);
+          }
+          xhReq.open("GET", <?php echo Stats::cpuURL();?>, true);
+          xhReq.send(null);
+        },1000);
       }
     </script>
     <script type='text/javascript'>

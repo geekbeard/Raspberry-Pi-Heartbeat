@@ -1,5 +1,6 @@
 <?php
 	require_once "db.php" ;
+	include "config.php" ;
 
 	class Stats {
 
@@ -46,6 +47,16 @@
 			}
 			$cpuload = round($cpuload, 1); //One decimal place
 			return $cpuload ;
+		}
+
+		public static function temperatureURL() {
+			include "config.php" ;
+			return "\"".$config["temperatureURL"]."\"" ;
+		}
+
+		public static function cpuURL() {
+			include "config.php" ;
+			return "\"".$config["cpuURL"]."\"" ;
 		}
 
 		public static function temperature() {
