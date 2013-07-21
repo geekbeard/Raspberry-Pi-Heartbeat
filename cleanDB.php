@@ -1,5 +1,6 @@
 <?php require_once "config.php" ?>
 <?php require_once "db.php" ?>
+<?php require_once "funs.php" ?>
 
 <?php
 
@@ -25,7 +26,7 @@
 		if($verbose)
 			echo "DB created! <br>";
 		
-		Stat::measureTemp();
+		Stats::measureTemp();
 	
 		if($verbose)
 			echo "First values inserted! Good luck:) <br>";
