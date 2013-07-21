@@ -174,6 +174,13 @@
     </script>
   </head>
   <body>
+    <div  class="heartbeat">
+    
+    <div class="ribbon">
+    <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat">Fork me on GitHub</a>
+  </div>
+
+  
 	<style>
 	<?php include "style.css" ?>
 	</style>
@@ -189,6 +196,6 @@
   	</div>
     <div id="chart_temphistory"></div>
     <div id="chart_cpuhistory"></div>
-    
+    </div>
   </body>
 </html>

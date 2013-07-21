@@ -68,3 +68,45 @@
 
 
 }
+
+
+
+/*
+ * GitHub CSS ribbon (http://unindented.org/articles/2009/10/github-ribbon-using-css-transforms/)
+ */
+
+.heartbeat {
+  //overflow: hidden;
+  text-align: center;
+}
+
+ .ribbon {
+  background-color: #a00;
+  overflow: hidden;
+  /* top left corner */
+  width: 30em;
+  position: relative;
+  left: -10.5em;
+  top: 3.5em;
+  margin-bottom: 0.5em;
+  z-index: 100;
+  /* 45 deg ccw rotation */
+  -moz-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  /* shadow */
+  -moz-box-shadow: 0 0 1em #888;
+  -webkit-box-shadow: 0 0 1em #888;
+  -webkit-backface-visibility: hidden;
+}
+.ribbon a {
+  border: 2px solid #faa;
+  color: #fff;
+  display: block;
+  font: bold 81.25% 'Helvetiva Neue', Helvetica, Arial, sans-serif;
+  margin: 0.05em 0 0.075em 0;
+  padding: 0.5em 3.5em;
+  text-align: center;
+  text-decoration: none;
+  /* shadow */
+  text-shadow: 0 0 0.8em #444;
+}
