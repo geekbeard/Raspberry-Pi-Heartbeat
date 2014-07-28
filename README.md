@@ -36,8 +36,8 @@ As for now: 5-6 files
 
 1. Download a zip from [this page] (http://yuraa.github.io/Raspberry-Pi-Heartbeat/) and unzip to a desired web folder (i.e. /var/www/rpih/)
 2. Open config.php and update `$config["root_dir"]` the with directory you put it in. For example, if you put it into /var/www/rpih/: `$config["root_dir"]="/var/www/rpih/"`
-3a. Check and install if needed the prerequisites (see above)
-3b. Run `$ sudo ./install.sh` - this will try to install all missing prerequisites, initialize the database with the first temperature sample and update the crontab with the periodical temperature sampling. Default is a sample every 5 minutes. This can later be changed in `$ sudo crontab -e`
+3. Check and install if needed the prerequisites (see above)  OR 
+4. Run `$ sudo ./install.sh` - this will try to install all missing prerequisites, initialize the database with the first temperature sample and update the crontab with the periodical temperature sampling. Default is a sample every 5 minutes. This can later be changed in `$ sudo crontab -e`
 
 You can also manually add the cron job to your system/download the
 packages/clean the database. `$ sudo crontab -e` and add a line at the end of the file: 
