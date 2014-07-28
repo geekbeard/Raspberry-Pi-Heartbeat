@@ -23,27 +23,21 @@
         </header>
 
         <section id="downloads" class="clearfix">
-         <!-- <a href="http://blog.yuraa.com/rpih/rpih.zip" id="download-zip" class="button"><span>Download .zip</span></a>
-           --> <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-         <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
           <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat" id="view-on-github" class="button"><span>View on GitHub</span></a>
-         
-          
         </section>
 
         <hr>
 
         <section id="main_content">
-          <h3>
-<a name="welcome-raspberry-pi-heartbeat" class="anchor" href="#welcome-raspberry-pi-heartbeat"><span class="octicon octicon-link"></span></a>Welcome to Raspberry Pi Heartbeat Project</h3>
+          <h1>
+<a name="raspberry-pi-heartbeat" class="anchor" href="#raspberry-pi-heartbeat"><span class="octicon octicon-link"></span></a>Raspberry-Pi-Heartbeat</h1>
 
-<p>This is a small project for creating a nice, informative and easy to install status webpage for Raspberry Pi running Raspbian. Though it also can be used on other systems with a few tweaks.</p>
+<h2>
+<a name="status-webpage-for-raspberry-pi" class="anchor" href="#status-webpage-for-raspberry-pi"><span class="octicon octicon-link"></span></a>Status webpage for Raspberry Pi</h2>
 
-<p><img src="http://i.imgur.com/nEqeHF6.png" alt="Interface"></p>
-
-<p>Parts of this project were taken from: <a href="http://derkev.in/rpisysinfoscript/">Sysinfo Script</a></p>
-
-<p>Project is actively updated! Stay tuned for additional features!</p>
+<p><img src="http://i.imgur.com/nEqeHF6.png" alt="Raspberry Pi Heartbeat"></p>
 
 <h3>
 <a name="prerequisites" class="anchor" href="#prerequisites"><span class="octicon octicon-link"></span></a>Prerequisites</h3>
@@ -51,69 +45,77 @@
 <p>You will have to check a few things for this page to show up correctly. You need to have:</p>
 
 <ul>
+<li>lsb-release (for non Raspbian distributions) - so the automated installer script can find your distribution name.</li>
 <li>Webserver (apache \ lighttpd \ ..) with PHP</li>
-<li>Sqlite for PHP <code>$ sudo apt-get install php5-sqlite</code> </li>
-<li>
-<a href="http://support.godaddy.com/help/article/119/turning-off-php-safe-mode-on-your-server">PHP Safe Mode = off</a> </li>
-<li>vnstat installed <code>$ sudo apt-get install vnstat</code>
+</ul><h5>
+<a name="optional-installsh-will-install-them-for-you" class="anchor" href="#optional-installsh-will-install-them-for-you"><span class="octicon octicon-link"></span></a>Optional (./install.sh will install them for you):</h5>
+
+<ul>
+<li>Sqlite for PHP <code>$ sudo apt-get install php5-sqlite</code>
 </li>
-</ul><p>First 3 are more or less general and common. VNSTAT is additional app which collects traffic information. You might fiddle around with it's settings after the installation if you want. Main requirement is that it does give an output with this command <code>vnstat --dumpdb</code>.</p>
+<li>PHP Safe Mode = off</li>
+<li>vstat installed <code>$ sudo apt-get install vnstat</code>
+</li>
+</ul><p>First 3 are more or less general and common. VNSTAT is additional app which collects traffic information. You might fiddle around with it's settings after the installation if you want. Main requirement is that it does give an output with this command <code>$ vnstat --dumpdb</code>.</p>
 
 <h3>
 <a name="contents-of-the-package--installation" class="anchor" href="#contents-of-the-package--installation"><span class="octicon octicon-link"></span></a>Contents of the package &amp; Installation</h3>
 
-<p>As for now: 5-6 files</p>
+<p>As for now: 8-9 files</p>
 
-<ol>
+<ul>
+<li>config.php - Where you can configure all the settings (folder path, verbosity and future options)</li>
 <li>index.php - Home page which shows the graphs and info.</li>
 <li>style.css - Styles for the fashion!</li>
 <li>rpiTemp.db - SQLite db file. With some test data.</li>
 <li>measuretemp.php - php script for cron job.</li>
-<li>cleanDB.php - script to clean the DB from test data!</li>
-<li>*cl.php - this file will be created by cleanDB.php as a flag to mark the operation as done.</li>
-</ol><p>To set it up:</p>
+<li>cleanDB.php - script to clean the DB from sampling data and forbid future accidental deletions using a lock file.</li>
+<li>db.lck - lock file used by cleanDB.php to flag the clean operation as done and forbid future database cleanups. If you do want to reset the database, then delete db.lck first.</li>
+<li>funs.php - extras for Ajax and live measurements</li>
+</ul><p><strong>To set it up:</strong></p>
 
 <ol>
-<li>Check and install if needed the prerequisites (see above)</li>
-<li>Download a zip from this page.</li>
-<li>Put it into a web server folder on your RPi (i.e. /var/www/ )</li>
-<li>Unzip.</li>
-<li>Setup a cron job as root
-<code>$ sudo crontab -e</code>
-and add a line at the end of the file:
-<p><code>*/5 * * * * php /var/www/measuretemp.php</code> - /var/www/ is the place where you've unziped the package!</p>
-<p>This will run measuretemp.php every 5 minutes. If you want it to happen less often, change 5 to a higher number of minutes (*/10  for every 10 minutes, */35 for every 35 minutes and so on).</p></li>
-<li>CLEAN DB: in your browser open http://rpi.IP/your_path/cleanDB.php</li>  
-</ol>
+<li>Download a zip from <a href="http://yuraa.github.io/Raspberry-Pi-Heartbeat/">this page</a> and unzip to a desired web folder (i.e. /var/www/rpih/)</li>
+<li>Open config.php and update <code>$config["root_dir"]</code> the with directory you put it in. For example, if you put it into /var/www/rpih/: <code>$config["root_dir"]="/var/www/rpih/"</code>
+</li>
+<li>Check and install if needed the prerequisites (see above)  OR </li>
+<li>Run <code>$ sudo ./install.sh</code> - this will try to install all missing prerequisites, initialize the database with the first temperature sample and update the crontab with the periodical temperature sampling. Default is a sample every 5 minutes. This can later be changed in <code>$ sudo crontab -e</code>
+</li>
+</ol><p>You can also manually add the cron job to your system/download the
+packages/clean the database. <code>$ sudo crontab -e</code> and add a line at the end of the file: 
+<code>*/5 * * * * php /path/measuretemp.php</code> - /path/ is the place where you've
+unziped the package! This will run measuretemp.php every 5 minutes. If you want
+it to happen less often, change 5 to a higher number of minutes (*/10 for every
+10 minutes, */35 for every 35 minutes and so on).</p>
 
+<p>The database can be cleaned using cleanDB.php, which will also produce a lock
+file to avoid future  accidental deletions. Delete the lock file (<code>db.lck</code>) first if you
+really want to clean the database.</p>
 
 <p><strong>You are done!</strong></p>
-<p>You've unzipped the package, created a scheduled task for Raspbian to run the php script every N minutes and you have cleaned the database from test data and the script created a fail safe flag (file: cl.php) which will prevent anyone from cleaning db again!</p>
+
+<p>You've unzipped the package, created a scheduled task for Raspbian to run the php script every N minutes and you have cleaned the database from test data and the script created a fail safe flag (file: <code>db.lck</code>) which will prevent anyone from cleaning db again!</p>
 
 <p>Access the webpage with the web browser and start collecting statistics!:)</p>
+
 <p>And of course come back for updated versions!</p>
 
 <h3>
 <a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
-<p>First version by: <a href="https://github.com/yuraa" class="user-mention">@yuraa</a> </p>
-<p>Contributors: <a href="https://github.com/metabrain" class="user-mention">@metabrain</a></p>
+<p>First version by: <a href="https://github.com/beard" class="user-mention">@beard</a></p>
 
 <h3>
 <a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
-<p>If you have any questions \ suggestions \ feedbacks: <a href="mailto:rpih@yuraa.com">rpih@yuraa.com</a> - we hope you send us a note!:)</p>
+<p>If you have any questions \ suggestions \ feedbacks: <a href="mailto:beard@geekbeard.com">beard@geekbeard.com</a> - we hope you send us a note!:)</p>
 
 <p>Also in case you want to join as a contributor - send a message to us. (project will go public once it has a clean code and comments for others to be able to contribute easily).</p>
-
-<p>And a shout out for Reddit and <a href="http://www.reddit.com/r/raspberry_pi/comments/1g9e0v/everyday_at_825_i_get_a_cpu_load_spike_i_dont/caiauey">this thread</a> which made me put this together!:)</p>
-          
-          
         </section>
 
         <footer>
           Raspberry Pi Heartbeat is maintained by <a href="https://github.com/yuraa">yuraa</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
         
