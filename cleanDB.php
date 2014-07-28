@@ -21,7 +21,7 @@
 	
 		if($verbose)
 			echo "DB Droped! <br>";
-		DB::exec("CREATE TABLE 'rpi_temp' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'temp' REAL, 'time' TEXT, 'cpu' REAL)");
+		DB::exec("CREATE TABLE 'rpi_temp' ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 'temp' REAL, 'time' TEXT, 'cpu' REAL,'rtemp' REAL,'hum' REAL)");
 	
 		if($verbose)
 			echo "DB created! <br>";

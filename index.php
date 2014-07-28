@@ -18,7 +18,7 @@
       google.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['id', 'temperature'], <?php echo Stats::temperatures() ; ?>  
+          ['id', 'RPI Temp'], <?php echo Stats::temperatures() ; ?>  
         ]);
 
         var options = {
@@ -174,13 +174,6 @@
     </script>
   </head>
   <body>
-    <div  class="heartbeat">
-    
-    <div class="ribbon">
-    <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat">Fork me on GitHub</a>
-  </div>
-
-  
 	<style>
 	<?php include "style.css" ?>
 	</style>
@@ -193,9 +186,10 @@
   			<div id="traffic_div"></div>
   			
   		</div>
+  		<div style="clear: both;"></div>
   	</div>
     <div id="chart_temphistory"></div>
     <div id="chart_cpuhistory"></div>
-    </div>
+    
   </body>
 </html>

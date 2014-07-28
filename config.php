@@ -1,8 +1,8 @@
 <?php
 	
 
-	$config["srv_dir"] = "heartbeat/" ;
-	$config["root_dir"] = "/mnt/usb/heartbeat/" ; #chang the path (/var/www/temp/) to where you unziped the package
+	$config["srv_dir"] = "" ;
+	$config["root_dir"] = "/var/www/" ; #chang the path (/var/www/temp/) to where you unziped the package
 	$root_dir = $config["root_dir"] ;
 	
 	
