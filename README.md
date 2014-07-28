@@ -59,9 +59,9 @@ Access the webpage with the web browser and start collecting statistics!:)
 And of course come back for updated versions!
 
 ###Authors and Contributors###
-First version by: @yuraa
+First version by: @beard
 
 ###Support or Contact###
-If you have any questions \ suggestions \ feedbacks: rpih@yuraa.com - we hope you send us a note!:)
+If you have any questions \ suggestions \ feedbacks: beard@geekbeard.com - we hope you send us a note!:)
 
 Also in case you want to join as a contributor - send a message to us. (project will go public once it has a clean code and comments for others to be able to contribute easily).
