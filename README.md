@@ -21,7 +21,7 @@ First 3 are more or less general and common. VNSTAT is additional app which coll
 
 ###Contents of the package & Installation###
 
-As for now: 5-6 files
+As for now: 8-9 files
 
 * config.php - Where you can configure all the settings (folder path, verbosity and future options)
 * index.php - Home page which shows the graphs and info.
