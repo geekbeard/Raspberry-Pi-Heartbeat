@@ -1,54 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <title>Raspberry Pi Heartbeat by geekbeard</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <title>Raspberry Pi Heartbeat by yuraa</title>
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/geekbeard/Raspberry-Pi-Heartbeat">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/geekbeard/Raspberry-Pi-Heartbeat/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/geekbeard/Raspberry-Pi-Heartbeat/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-        <header>
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
           <h1>Raspberry Pi Heartbeat</h1>
-          <h2>Status webpage for Raspberry Pi server running Raspbian</h2>
-        </header>
+          <p>Status webpage for Raspberry Pi server running Raspbian</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/geekbeard">geekbeard</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/yuraa/Raspberry-Pi-Heartbeat" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
-<a name="raspberry-pi-heartbeat" class="anchor" href="#raspberry-pi-heartbeat"><span class="octicon octicon-link"></span></a>Raspberry-Pi-Heartbeat</h1>
+        <h1>
+<a id="raspberry-pi-heartbeat" class="anchor" href="#raspberry-pi-heartbeat" aria-hidden="true"><span class="octicon octicon-link"></span></a>Raspberry-Pi-Heartbeat</h1>
 
 <h2>
-<a name="status-webpage-for-raspberry-pi" class="anchor" href="#status-webpage-for-raspberry-pi"><span class="octicon octicon-link"></span></a>Status webpage for Raspberry Pi</h2>
+<a id="status-webpage-for-raspberry-pi" class="anchor" href="#status-webpage-for-raspberry-pi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Status webpage for Raspberry Pi</h2>
 
 <p><img src="http://i.imgur.com/nEqeHF6.png" alt="Raspberry Pi Heartbeat"></p>
 
 <h3>
-<a name="prerequisites" class="anchor" href="#prerequisites"><span class="octicon octicon-link"></span></a>Prerequisites</h3>
+<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h3>
 
 <p>You will have to check a few things for this page to show up correctly. You need to have:</p>
 
 <ul>
 <li>lsb-release (for non Raspbian distributions) - so the automated installer script can find your distribution name.</li>
 <li>Webserver (apache \ lighttpd \ ..) with PHP</li>
-</ul><h5>
-<a name="optional-installsh-will-install-them-for-you" class="anchor" href="#optional-installsh-will-install-them-for-you"><span class="octicon octicon-link"></span></a>Optional (./install.sh will install them for you):</h5>
+</ul>
+
+<h5>
+<a id="optional-installsh-will-install-them-for-you" class="anchor" href="#optional-installsh-will-install-them-for-you" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optional (./install.sh will install them for you):</h5>
 
 <ul>
 <li>Sqlite for PHP <code>$ sudo apt-get install php5-sqlite</code>
@@ -56,10 +65,12 @@
 <li>PHP Safe Mode = off</li>
 <li>vstat installed <code>$ sudo apt-get install vnstat</code>
 </li>
-</ul><p>First 3 are more or less general and common. VNSTAT is additional app which collects traffic information. You might fiddle around with it's settings after the installation if you want. Main requirement is that it does give an output with this command <code>$ vnstat --dumpdb</code>.</p>
+</ul>
+
+<p>First 3 are more or less general and common. VNSTAT is additional app which collects traffic information. You might fiddle around with it's settings after the installation if you want. Main requirement is that it does give an output with this command <code>$ vnstat --dumpdb</code>.</p>
 
 <h3>
-<a name="contents-of-the-package--installation" class="anchor" href="#contents-of-the-package--installation"><span class="octicon octicon-link"></span></a>Contents of the package &amp; Installation</h3>
+<a id="contents-of-the-package--installation" class="anchor" href="#contents-of-the-package--installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contents of the package &amp; Installation</h3>
 
 <p>As for now: 8-9 files</p>
 
@@ -72,7 +83,9 @@
 <li>cleanDB.php - script to clean the DB from sampling data and forbid future accidental deletions using a lock file.</li>
 <li>db.lck - lock file used by cleanDB.php to flag the clean operation as done and forbid future database cleanups. If you do want to reset the database, then delete db.lck first.</li>
 <li>funs.php - extras for Ajax and live measurements</li>
-</ul><p><strong>To set it up:</strong></p>
+</ul>
+
+<p><strong>To set it up:</strong></p>
 
 <ol>
 <li>Download a zip from <a href="http://yuraa.github.io/Raspberry-Pi-Heartbeat/">this page</a> and unzip to a desired web folder (i.e. /var/www/rpih/)</li>
@@ -81,7 +94,9 @@
 <li>Check and install if needed the prerequisites (see above)  OR </li>
 <li>Run <code>$ sudo ./install.sh</code> - this will try to install all missing prerequisites, initialize the database with the first temperature sample and update the crontab with the periodical temperature sampling. Default is a sample every 5 minutes. This can later be changed in <code>$ sudo crontab -e</code>
 </li>
-</ol><p>You can also manually add the cron job to your system/download the
+</ol>
+
+<p>You can also manually add the cron job to your system/download the
 packages/clean the database. <code>$ sudo crontab -e</code> and add a line at the end of the file: 
 <code>*/5 * * * * php /path/measuretemp.php</code> - /path/ is the place where you've
 unziped the package! This will run measuretemp.php every 5 minutes. If you want
@@ -101,25 +116,20 @@ really want to clean the database.</p>
 <p>And of course come back for updated versions!</p>
 
 <h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
 
 <p>First version by: <a href="https://github.com/beard" class="user-mention">@beard</a></p>
 
 <h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
 
 <p>If you have any questions \ suggestions \ feedbacks: <a href="mailto:beard@geekbeard.com">beard@geekbeard.com</a> - we hope you send us a note!:)</p>
 
 <p>Also in case you want to join as a contributor - send a message to us. (project will go public once it has a clean code and comments for others to be able to contribute easily).</p>
-        </section>
+      </section>
 
-        <footer>
-          Raspberry Pi Heartbeat is maintained by <a href="https://github.com/yuraa">yuraa</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-        
-      </div>
     </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
