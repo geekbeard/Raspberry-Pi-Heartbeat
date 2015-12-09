@@ -62,6 +62,6 @@ And of course come back for updated versions!
 First version by: @beard
 
 ###Support or Contact###
-If you have any questions \ suggestions \ feedbacks: beard@geekbeard.com - we hope you send us a note!:)
+If you have any questions \ suggestions \ feedbacks: geekbearddev@gmail.com - we hope you send us a note!:)
 
-Also in case you want to join as a contributor - send a message to us. (project will go public once it has a clean code and comments for others to be able to contribute easily).
+Please feel free to fork and improve!
